@@ -1,0 +1,13 @@
+HTTP/2 200 
+date: Mon, 22 Jun 2020 08:17:32 GMT
+content-type: application/json; charset=utf-8
+access-control-allow-origin: *
+content-length: 164
+cache-control: public, max-age=0, must-revalidate
+x-vercel-cache: MISS
+age: 0
+x-vercel-trace: hnd1
+server: Vercel
+x-vercel-id: hnd1::sfo1::hrz8x-1592813851887-6498c91fbb36
+strict-transport-security: max-age=63072000; includeSubDomains; preload
+
