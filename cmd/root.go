@@ -67,5 +67,5 @@ func newDefaultClient() (*Client, error) {
 	endpointURL := viper.GetString("url")
 	httpClient := &http.Client{}
 	userAgent := fmt.Sprintf("covid-19-japan-api-cli/%s (%s)", Version, runtime.Version())
-	return newClient(endpointURL, httpClient, userAgent)
+	return newClient(endpointURL, httpClient, userAgent, nil)
 }

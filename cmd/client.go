@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
 	"path"
@@ -15,12 +17,19 @@ type Client struct {
 	EndPointURL *url.URL
 	HTTPClient  *http.Client
 	UserAgent   string
+
+	Logger *log.Logger
 }
 
-func newClient(endpointURL string, httpClient *http.Client, userAgent string) (*Client, error) {
+func newClient(endpointURL string, httpClient *http.Client, userAgent string, logger *log.Logger) (*Client, error) {
 	parsedURL, err := url.ParseRequestURI(endpointURL)
 	if err != nil {
 		return nil, fmt.Errorf("failed to parse url: %s", endpointURL)
+	}
+
+	var discardLogger = log.New(ioutil.Discard, "", log.LstdFlags)
+	if logger == nil {
+		logger = discardLogger
 	}
 
 	client := &Client{
