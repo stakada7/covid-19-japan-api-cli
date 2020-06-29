@@ -25,8 +25,8 @@ func TestGetPrefectures(t *testing.T) {
 		{
 			name: "success",
 
-			mockResponseHeaderFile: "testdata/GetPrefectures/success-header",
-			mockResponseBodyFile:   "testdata/GetPrefectures/success-body",
+			mockResponseHeaderFile: "../testdata/GetPrefectures/success-header",
+			mockResponseBodyFile:   "../testdata/GetPrefectures/success-body",
 
 			expectedMethod:      http.MethodGet,
 			expectedRequestPath: "/api/v1/prefectures",
