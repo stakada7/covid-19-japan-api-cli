@@ -86,13 +86,11 @@ func TestGetPrefectures(t *testing.T) {
 		},
 	}
 
-	_, mockServerURL := newMockServer()
-	cli := newTestClient(mockServerURL)
-
 	for _, tt := range tests {
-		// mux.HandleFunc(tt.expectedRequestPath, func(w http.ResponseWriter, r *http.Request) {
-		// 	fmt.Fprint(w, tt.want)
-		// })
+
+		t.Run(tt.name, func(t *testing.T) {
+			cli, teardown := setup(t, tt.mockResponseHeaderFile, tt.mockResponseBodyFile, tt.expectedMethod, tt.expectedRequestPath, tt.expectedRawQuery)
+			defer teardown()
 
 		prefectures, err := cli.GetPrefectures(context.Background())
 		if tt.wantErr {
@@ -119,6 +117,8 @@ func TestGetPrefectures(t *testing.T) {
 				}
 			}
 		}
+
+		})
 
 	}
 }
