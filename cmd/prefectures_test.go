@@ -92,31 +92,31 @@ func TestGetPrefectures(t *testing.T) {
 			cli, teardown := setup(t, tt.mockResponseHeaderFile, tt.mockResponseBodyFile, tt.expectedMethod, tt.expectedRequestPath, tt.expectedRawQuery)
 			defer teardown()
 
-		prefectures, err := cli.GetPrefectures(context.Background())
-		if tt.wantErr {
-			if err == nil {
-				t.Fatalf("response error should not be non-nil. got=nil")
-			}
+			prefectures, err := cli.GetPrefectures(context.Background())
+			if tt.wantErr {
+				if err == nil {
+					t.Fatalf("response error should not be non-nil. got=nil")
+				}
 
-			if !strings.Contains(err.Error(), tt.expectedErrMessage) {
-				t.Fatalf("response erro message wtong. '%s' is expected to contain '%s'", err.Error(), tt.expectedErrMessage)
-			}
-		} else {
-			if err != nil {
-				t.Fatalf("response error should be nil. got=%s", err.Error())
-			}
+				if !strings.Contains(err.Error(), tt.expectedErrMessage) {
+					t.Fatalf("response erro message wtong. '%s' is expected to contain '%s'", err.Error(), tt.expectedErrMessage)
+				}
+			} else {
+				if err != nil {
+					t.Fatalf("response error should be nil. got=%s", err.Error())
+				}
 
-			if len(prefectures) != len(tt.want) {
-				t.Fatalf("response prefectures wrong. want=%+v, got=%+v", tt.want, prefectures)
-			}
-
-			for i, expected := range tt.want {
-				actual := prefectures[i]
-				if actual.ID != expected.ID || actual.NameJa != expected.NameJa || actual.NameEn != expected.NameEn || actual.Lat != expected.Lat || actual.Lng != expected.Lng {
+				if len(prefectures) != len(tt.want) {
 					t.Fatalf("response prefectures wrong. want=%+v, got=%+v", tt.want, prefectures)
 				}
+
+				for i, expected := range tt.want {
+					actual := prefectures[i]
+					if actual.ID != expected.ID || actual.NameJa != expected.NameJa || actual.NameEn != expected.NameEn || actual.Lat != expected.Lat || actual.Lng != expected.Lng {
+						t.Fatalf("response prefectures wrong. want=%+v, got=%+v", tt.want, prefectures)
+					}
+				}
 			}
-		}
 
 		})
 
