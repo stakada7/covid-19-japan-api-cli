@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"path"
@@ -47,24 +48,25 @@ func runPrefecturesCmd(cmd *cobra.Command, args []string) error {
 }
 
 // GetPrefectures ...
-func (cli *Client) GetPrefectures(ctx context.Context) ([]*Prefecture, error) {
+func (c *Client) GetPrefectures(ctx context.Context) ([]*Prefecture, error) {
 
-	subPath := path.Join("api", "v1", "prefectures")
-	httpRequest, err := cli.newRequest(ctx, http.MethodGet, subPath, nil)
-	if err != nil {
-		return nil, err
-	}
+	relativePath := path.Join("api", "v1", "prefectures")
 
-	httpResponse, err := cli.HTTPClient.Do(httpRequest)
+	req, err := c.newRequest(ctx, http.MethodGet, relativePath, nil, nil, nil)
 	if err != nil {
 		return nil, err
 	}
 
 	var prefectures []*Prefecture
-	if err := decodeBody(httpResponse, &prefectures); err != nil {
-		return nil, err
-	}
+	code, err := c.doRequest(req, &prefectures)
 
-	return prefectures, nil
+	switch code {
+	case http.StatusOK:
+		return prefectures, nil
+	case http.StatusBadRequest:
+		return nil, errors.New("bad request. some parameters may be invalid")
+	default:
+		return nil, errors.New("unexpected error")
+	}
 
 }
