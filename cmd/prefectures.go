@@ -33,12 +33,12 @@ func runPrefecturesCmd(cmd *cobra.Command, args []string) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	res, err := cli.GetPrefectures(ctx)
+	prefectures, err := cli.GetPrefectures(ctx)
 	if err != nil {
-		return fmt.Errorf("GetPrefectures failed: res = %+v", res)
+		return fmt.Errorf("GetPrefectures failed: res = %+v", prefectures)
 	}
 
-	for _, prefecture := range res {
+	for _, prefecture := range prefectures {
 		fmt.Printf("ID:%d NameJa:%s NameEn:%s Lat:%g Lng:%g Cases:%d Deaths:%d\n", prefecture.ID, prefecture.NameJa, prefecture.NameEn, prefecture.Lat, prefecture.Lng, prefecture.Cases, prefecture.Deaths)
 	}
 
