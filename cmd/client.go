@@ -36,6 +36,7 @@ func newClient(endpointURL string, httpClient *http.Client, userAgent string, lo
 		EndPointURL: parsedURL,
 		HTTPClient:  httpClient,
 		UserAgent:   userAgent,
+		Logger:      discardLogger,
 	}
 	return client, nil
 }
